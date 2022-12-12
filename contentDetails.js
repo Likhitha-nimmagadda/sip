@@ -102,17 +102,20 @@ function dynamicContentDetails(ob)
 
     
 
-    let buttonDiv2 = document.createElement('div')
+    let buttonDiv2 = document.createElement('a')
     buttonDiv2.id = 'button'
+    buttonDiv2.href="form.html"
+    
+    buttonDiv2.target="_blank"
 
     let buttonTag2 = document.createElement('button')
     buttonDiv2.appendChild(buttonTag2)
 
     buttonText2 = document.createTextNode('Review')
-    buttonTag2.onclick  =   function()
-    {
-       window.location.replace("http://127.0.0.1:5500/form.html")
-    }
+    // buttonTag2.onclick  =   function()
+    // {
+    //    window.location.replace("http://127.0.0.1:5500/form.html")
+    // }
     buttonTag2.appendChild(buttonText2)
 
     console.log(mainContainer.appendChild(imageSectionDiv));
