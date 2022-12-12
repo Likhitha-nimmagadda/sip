@@ -112,10 +112,9 @@ function dynamicContentDetails(ob)
     buttonDiv2.appendChild(buttonTag2)
 
     buttonText2 = document.createTextNode('Review')
-    // buttonTag2.onclick  =   function()
-    // {
-    //    window.location.replace("http://127.0.0.1:5500/form.html")
-    // }
+
+    localStorage.setItem("key",window.location.href.split("?").slice(-1)[0])
+    
     buttonTag2.appendChild(buttonText2)
 
     console.log(mainContainer.appendChild(imageSectionDiv));
@@ -133,6 +132,31 @@ function dynamicContentDetails(ob)
     productDetailsDiv.appendChild(buttonDiv)
     productDetailsDiv.appendChild(buttonDiv2)
 
+    fetch(`http://localhost:4000/reviews-api/get-data/${localStorage.getItem("key")}`)
+    .then((response)=> response.json())
+    .then((data)=>{
+        console.log("data:",data)
+        let div = document.createElement("div")
+        div.innerHTML=`
+        <div class="" style="display: flex;">
+            <p style="margin-right: 5px;">Product Review: </p>
+            <p style="margin-left: 5px;">${Math.round(data)}%</p>
+            <progress id="file" value="${data}" max="100" style="margin-top: auto; margin-bottom: auto;"></progress>
+        </div>`
+
+        fetch(`http://localhost:4000/reviews-api/get-delivery-data/${localStorage.getItem("key")}`)
+        .then((response)=> response.json())
+        .then((data)=>{
+    
+        div.innerHTML+=`
+        <div class="" style="display: flex;">
+            <p style="margin-right: 5px;">Delivery Review: </p>
+            <p style="margin-left: 5px;">${Math.round(data)}%</p>
+            <progress id="file" value="${data}" max="100" style="margin-top: auto; margin-bottom: auto;"></progress>
+        </div>`
+        })
+        productDetailsDiv.appendChild(div)
+    })
 
     return mainContainer
 }
